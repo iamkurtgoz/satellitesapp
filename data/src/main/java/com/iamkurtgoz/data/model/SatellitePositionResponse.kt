@@ -13,14 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.iamkurtgoz.data.dataSource
+package com.iamkurtgoz.data.model
 
-import com.iamkurtgoz.data.model.SatelliteDetailResponse
-import com.iamkurtgoz.data.model.SatellitePositionBody
-import com.iamkurtgoz.data.model.SatelliteResponse
+data class SatellitePositionResponse(
+    val list: List<SatellitePositionBody>,
+)
 
-interface RemoteDataSource {
-    suspend fun fetchSatellites(): List<SatelliteResponse>
-    suspend fun fetchSatelliteDetail(id: Int): SatelliteDetailResponse?
-    suspend fun fetchSatellitePositions(id: Int): SatellitePositionBody?
-}
+data class SatellitePositionBody(
+    val id: String,
+    val positions: List<SatellitePositionItem>,
+)
+
+data class SatellitePositionItem(
+    val posX: Double,
+    val posY: Double,
+)

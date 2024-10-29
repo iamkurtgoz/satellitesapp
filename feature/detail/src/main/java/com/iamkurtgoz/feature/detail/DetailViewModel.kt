@@ -16,17 +16,22 @@
 package com.iamkurtgoz.feature.detail
 
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import com.iamkurtgoz.common.core.CoreViewModel
 import com.iamkurtgoz.common.model.BaseError
 import com.iamkurtgoz.domain.usecase.impl.SatelliteDetailUseCase
+import com.iamkurtgoz.domain.usecase.impl.SatellitePositionUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @HiltViewModel
 internal class DetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val satelliteDetailUseCase: SatelliteDetailUseCase,
+    private val satellitePositionUseCase: SatellitePositionUseCase,
 ) : CoreViewModel<DetailScreenContract.State, DetailScreenContract.SideEffect, DetailScreenContract.Event>(
     initialState = DetailScreenContract.State(
         isLoading = false,
@@ -78,10 +83,20 @@ internal class DetailViewModel @Inject constructor(
             .callWithSuccess { response ->
                 response?.let {
                     updateState { it.copy(satelliteDetailModel = response) }
+                    fetchPositions()
                 } ?: run {
                     updateState { it.copy(error = BaseError()) }
                 }
                 setLoading(false)
             }
+    }
+
+    private fun fetchPositions() {
+        satellitePositionUseCase
+            .invoke(state.value.route.id)
+            .onEach { response ->
+                updateState { it.copy(satellitePositionModel = response) }
+            }
+            .launchIn(viewModelScope)
     }
 }

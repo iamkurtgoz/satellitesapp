@@ -13,14 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.iamkurtgoz.data.model
+package com.iamkurtgoz.domain.model
 
-data class SatellitePosition(
-    val id: String,
-    val positions: List<SatellitePositionItem>,
-)
-
-data class SatellitePositionItem(
-    val posX: Double,
-    val posY: Double,
+data class SatellitePositionUIModel(
+    val x: Double,
+    val y: Double,
 )

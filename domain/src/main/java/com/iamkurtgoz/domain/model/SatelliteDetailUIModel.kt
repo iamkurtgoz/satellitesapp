@@ -17,7 +17,7 @@ package com.iamkurtgoz.domain.model
 
 data class SatelliteDetailUIModel(
     val id: Int,
-    val costPerLaunch: Int,
+    val costPerLaunch: String,
     val firstFlightDate: String,
     val height: Int,
     val mass: Int,

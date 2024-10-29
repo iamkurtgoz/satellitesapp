@@ -23,6 +23,7 @@ import com.iamkurtgoz.data.dataSource.RemoteDataSource
 import com.iamkurtgoz.data.di.DummyRemoteDataSource
 import com.iamkurtgoz.data.mapper.toUIModel
 import com.iamkurtgoz.domain.model.SatelliteDetailUIModel
+import com.iamkurtgoz.domain.model.SatellitePositionUIModel
 import com.iamkurtgoz.domain.model.SatelliteUIModel
 import com.iamkurtgoz.domain.repository.SatelliteRepository
 import javax.inject.Inject
@@ -54,5 +55,10 @@ internal class SatelliteRepositoryImpl @Inject constructor(
                     response?.toUIModel()
                 }
         }
+    }
+
+    override suspend fun fetchSatellitePositions(id: Int): List<SatellitePositionUIModel> {
+        val positions = remoteDataSource.fetchSatellitePositions(id)
+        return positions?.toUIModel() ?: emptyList()
     }
 }

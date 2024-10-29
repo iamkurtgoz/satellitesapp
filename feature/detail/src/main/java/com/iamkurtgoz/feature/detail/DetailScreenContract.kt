@@ -19,6 +19,7 @@ import androidx.compose.runtime.Immutable
 import com.iamkurtgoz.common.core.CoreState
 import com.iamkurtgoz.common.model.BaseError
 import com.iamkurtgoz.domain.model.SatelliteDetailUIModel
+import com.iamkurtgoz.domain.model.SatellitePositionUIModel
 import com.iamkurtgoz.navigation.DetailScreenRoute
 
 internal class DetailScreenContract {
@@ -28,6 +29,7 @@ internal class DetailScreenContract {
         val route: DetailScreenRoute,
         val isInitialize: Boolean = false,
         val satelliteDetailModel: SatelliteDetailUIModel? = null,
+        var satellitePositionModel: SatellitePositionUIModel? = null,
         val error: BaseError? = null,
     ) : CoreState.ViewState
 

@@ -15,6 +15,7 @@
  */
 package com.iamkurtgoz.feature.detail
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -99,7 +100,7 @@ internal fun DetailScreenContent(
 
                     append(DetailScreenContract.Static.DOUBLE_DOT)
 
-                    append(safeSatelliteDetailModel.costPerLaunch.toString())
+                    append(safeSatelliteDetailModel.costPerLaunch)
                 },
                 modifier = Modifier
                     .padding(top = AppTheme.spacing.spacingMedium),
@@ -108,27 +109,31 @@ internal fun DetailScreenContent(
                 ),
             )
 
-            Text(
-                text = buildAnnotatedString {
-                    withStyle(
-                        style = SpanStyle(
-                            fontWeight = FontWeight.Bold,
-                        ),
-                        block = {
-                            append(stringResource(resourceR.string.last_position))
+            AnimatedVisibility(visible = state.satellitePositionModel != null) {
+                state.satellitePositionModel?.let { safePosition ->
+                    Text(
+                        text = buildAnnotatedString {
+                            withStyle(
+                                style = SpanStyle(
+                                    fontWeight = FontWeight.Bold,
+                                ),
+                                block = {
+                                    append(stringResource(resourceR.string.last_position))
+                                },
+                            )
+
+                            append(DetailScreenContract.Static.DOUBLE_DOT)
+
+                            append("(${safePosition.x},${safePosition.y})")
                         },
+                        modifier = Modifier
+                            .padding(top = AppTheme.spacing.spacingMedium),
+                        style = AppTheme.typography.textSm.copy(
+                            fontWeight = FontWeight.Light,
+                        ),
                     )
-
-                    append(DetailScreenContract.Static.DOUBLE_DOT)
-
-                    append("(0.864328522,0.646450855)")
-                },
-                modifier = Modifier
-                    .padding(top = AppTheme.spacing.spacingMedium),
-                style = AppTheme.typography.textSm.copy(
-                    fontWeight = FontWeight.Light,
-                ),
-            )
+                }
+            }
         }
     }
 }

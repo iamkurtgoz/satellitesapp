@@ -15,12 +15,13 @@
  */
 package com.iamkurtgoz.data.mapper
 
+import com.iamkurtgoz.data.ext.toCurrencyFormat
 import com.iamkurtgoz.data.model.SatelliteDetailResponse
 import com.iamkurtgoz.domain.model.SatelliteDetailUIModel
 
 fun SatelliteDetailResponse.toUIModel(): SatelliteDetailUIModel = SatelliteDetailUIModel(
     id = this.id,
-    costPerLaunch = this.cost_per_launch,
+    costPerLaunch = this.cost_per_launch.toString().toCurrencyFormat(),
     firstFlightDate = this.first_flight,
     height = this.height,
     mass = this.mass,

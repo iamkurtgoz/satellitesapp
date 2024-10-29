@@ -13,14 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.iamkurtgoz.data.dataSource
+package com.iamkurtgoz.data.ext
 
-import com.iamkurtgoz.data.model.SatelliteDetailResponse
-import com.iamkurtgoz.data.model.SatellitePositionBody
-import com.iamkurtgoz.data.model.SatelliteResponse
+import java.util.Locale
 
-interface RemoteDataSource {
-    suspend fun fetchSatellites(): List<SatelliteResponse>
-    suspend fun fetchSatelliteDetail(id: Int): SatelliteDetailResponse?
-    suspend fun fetchSatellitePositions(id: Int): SatellitePositionBody?
+fun String.toCurrencyFormat(): String {
+    return this.toLongOrNull()?.let {
+        String.format(Locale.getDefault(), "%,d", it).replace(',', '.')
+    } ?: this
 }

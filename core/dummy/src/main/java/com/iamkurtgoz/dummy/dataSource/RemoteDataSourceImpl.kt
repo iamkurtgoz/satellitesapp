@@ -17,6 +17,7 @@ package com.iamkurtgoz.dummy.dataSource
 
 import com.iamkurtgoz.data.dataSource.RemoteDataSource
 import com.iamkurtgoz.data.model.SatelliteDetailResponse
+import com.iamkurtgoz.data.model.SatellitePositionBody
 import com.iamkurtgoz.data.model.SatelliteResponse
 import javax.inject.Inject
 
@@ -27,6 +28,10 @@ internal class RemoteDataSourceImpl @Inject constructor() : RemoteDataSource {
     }
 
     override suspend fun fetchSatelliteDetail(id: Int): SatelliteDetailResponse? {
+        throw NotImplementedError()
+    }
+
+    override suspend fun fetchSatellitePositions(id: Int): SatellitePositionBody? {
         throw NotImplementedError()
     }
 }

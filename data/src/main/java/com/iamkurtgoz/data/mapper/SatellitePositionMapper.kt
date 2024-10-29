@@ -13,14 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.iamkurtgoz.data.dataSource
+package com.iamkurtgoz.data.mapper
 
-import com.iamkurtgoz.data.model.SatelliteDetailResponse
 import com.iamkurtgoz.data.model.SatellitePositionBody
-import com.iamkurtgoz.data.model.SatelliteResponse
+import com.iamkurtgoz.domain.model.SatellitePositionUIModel
 
-interface RemoteDataSource {
-    suspend fun fetchSatellites(): List<SatelliteResponse>
-    suspend fun fetchSatelliteDetail(id: Int): SatelliteDetailResponse?
-    suspend fun fetchSatellitePositions(id: Int): SatellitePositionBody?
+fun SatellitePositionBody.toUIModel(): List<SatellitePositionUIModel> {
+    return this.positions.map {
+        SatellitePositionUIModel(
+            x = it.posX,
+            y = it.posY,
+        )
+    }
 }
