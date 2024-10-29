@@ -3,7 +3,7 @@
 <p align="center">
   <a href="https://opensource.org/licenses/Apache-2.0"><img alt="License" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"/></a>
   <a href="https://android-arsenal.com/api?level=24"><img alt="API" src="https://img.shields.io/badge/API-24%2B-brightgreen.svg?style=flat"/></a>
-  <a href="https://github.com/iamkurtgoz/satellitesapp/actions"><img alt="Build Status" src="https://github.com/iamkurtgoz/satellitesapp/Android%20CI/badge.svg"/></a> <br>
+  <a href="https://github.com/iamkurtgoz/satellitesapp/actions"><img alt="Build Status" src="https://github.com/iamkurtgoz/satellitesapp/workflows/Android%20Build%20Check/badge.svg"/></a> <br>
 </p>
 
 <p align="center">
@@ -36,6 +36,67 @@ Go to the [Releases](https://github.com/iamkurtgoz/satellitesapp/releases) to do
 - [ksp](https://github.com/google/ksp): Kotlin Symbol Processing API for code generation and analysis.
 - [Turbine](https://github.com/cashapp/turbine): A small testing library for kotlinx.coroutines Flow.
 
+### Module Graph
+
+```mermaid
+%%{
+  init: {
+    'theme': 'base',
+    'themeVariables': {"primaryTextColor":"#fff","primaryColor":"#5a4f7c","primaryBorderColor":"#5a4f7c","lineColor":"#f5a623","tertiaryColor":"#40375c","fontSize":"12px"}
+  }
+}%%
+
+graph LR
+  subgraph :core
+    :core:navigation["navigation"]
+    :core:dummy["dummy"]
+    :core:local["local"]
+    :core:common["common"]
+    :core:common-ui["common-ui"]
+    :core:designsystem["designsystem"]
+    :core:resources["resources"]
+  end
+  subgraph :feature
+    :feature:list["list"]
+    :feature:detail["detail"]
+  end
+  :core:navigation --> :domain
+  :core:dummy --> :data
+  :core:local --> :data
+  :feature:list --> :core:common
+  :feature:list --> :core:common-ui
+  :feature:list --> :core:navigation
+  :feature:list --> :domain
+  :feature:list --> :core:designsystem
+  :feature:list --> :core:resources
+  :feature:detail --> :core:common
+  :feature:detail --> :core:common-ui
+  :feature:detail --> :core:navigation
+  :feature:detail --> :domain
+  :feature:detail --> :core:designsystem
+  :feature:detail --> :core:resources
+  :core:resources --> :core:common
+  :core:common-ui --> :core:designsystem
+  :core:common-ui --> :domain
+  :core:common-ui --> :core:common
+  :core:common-ui --> :core:resources
+  :app --> :data
+  :app --> :domain
+  :app --> :core:designsystem
+  :app --> :core:common
+  :app --> :core:common-ui
+  :app --> :core:resources
+  :app --> :core:navigation
+  :app --> :core:local
+  :app --> :core:dummy
+  :app --> :feature:list
+  :app --> :feature:detail
+  :data --> :domain
+  :data --> :core:common
+  :data --> :core:resources
+  :domain --> :core:common
+  :core:designsystem --> :domain
+```
 ## Find this repository useful? :heart:
 Support it by joining __[stargazers](https://github.com/iamkurtgoz/satellitesapp/stargazers)__ for this repository. :star: <br>
 Also, __[follow me](https://github.com/iamkurtgoz)__ on GitHub for my next creations! 🤩
