@@ -21,6 +21,7 @@ import com.iamkurtgoz.data.core.CoreRepository
 import com.iamkurtgoz.data.dataSource.RemoteDataSource
 import com.iamkurtgoz.data.di.DummyRemoteDataSource
 import com.iamkurtgoz.data.mapper.toUIModel
+import com.iamkurtgoz.domain.model.SatelliteDetailUIModel
 import com.iamkurtgoz.domain.model.SatelliteUIModel
 import com.iamkurtgoz.domain.repository.SatelliteRepository
 import javax.inject.Inject
@@ -32,6 +33,13 @@ internal class SatelliteRepositoryImpl @Inject constructor(
         return requestAny { remoteDataSource.fetchSatellites() }
             .mapOnSuccess { response ->
                 response.map { it.toUIModel() }
+            }
+    }
+
+    override suspend fun fetchSatelliteDetail(id: Int): RestResult<SatelliteDetailUIModel?> {
+        return requestAny { remoteDataSource.fetchSatelliteDetail(id = id) }
+            .mapOnSuccess { response ->
+                response?.toUIModel()
             }
     }
 }

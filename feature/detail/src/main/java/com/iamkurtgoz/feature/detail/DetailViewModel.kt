@@ -15,22 +15,28 @@
  */
 package com.iamkurtgoz.feature.detail
 
+import androidx.lifecycle.SavedStateHandle
+import androidx.navigation.toRoute
 import com.iamkurtgoz.common.core.CoreViewModel
-import com.iamkurtgoz.domain.usecase.impl.SatelliteListUseCase
+import com.iamkurtgoz.common.model.BaseError
+import com.iamkurtgoz.domain.usecase.impl.SatelliteDetailUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 internal class DetailViewModel @Inject constructor(
-    private val satelliteListUseCase: SatelliteListUseCase,
+    savedStateHandle: SavedStateHandle,
+    private val satelliteDetailUseCase: SatelliteDetailUseCase,
 ) : CoreViewModel<DetailScreenContract.State, DetailScreenContract.SideEffect, DetailScreenContract.Event>(
     initialState = DetailScreenContract.State(
         isLoading = false,
+        route = savedStateHandle.toRoute(),
     ),
 ) {
     init {
         if (!state.value.isInitialize) {
             updateState { it.copy(isInitialize = true) }
+            fetchDetail()
         }
     }
 
@@ -38,6 +44,9 @@ internal class DetailViewModel @Inject constructor(
         when (event) {
             is DetailScreenContract.Event.PopBackStack -> {
                 setPopBackStackSideEffect()
+            }
+            is DetailScreenContract.Event.Reload -> {
+                reload()
             }
         }
     }
@@ -48,5 +57,31 @@ internal class DetailViewModel @Inject constructor(
 
     private fun setPopBackStackSideEffect() {
         setSideEffect(DetailScreenContract.SideEffect.PopBackStack)
+    }
+
+    private fun reload() {
+        updateState { it.copy(error = null) }
+        fetchDetail()
+    }
+
+    private fun fetchDetail() {
+        satelliteDetailUseCase
+            .invoke(state.value.route.id)
+            .requester
+            .onLoading {
+                setLoading(true)
+            }
+            .onError { error ->
+                setLoading(false)
+                updateState { it.copy(error = error) }
+            }
+            .callWithSuccess { response ->
+                response?.let {
+                    updateState { it.copy(satelliteDetailModel = response) }
+                } ?: run {
+                    updateState { it.copy(error = BaseError()) }
+                }
+                setLoading(false)
+            }
     }
 }

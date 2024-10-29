@@ -20,4 +20,7 @@ import kotlinx.serialization.Serializable
 
 @Keep
 @Serializable
-data class DetailScreenRoute(val id: Int)
+data class DetailScreenRoute(
+    val id: Int,
+    val name: String,
+)

@@ -19,6 +19,7 @@ import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.iamkurtgoz.data.dataSource.RemoteDataSource
+import com.iamkurtgoz.data.model.SatelliteDetailResponse
 import com.iamkurtgoz.data.model.SatelliteResponse
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
@@ -34,6 +35,13 @@ internal class DummyRemoteDataSourceImpl @Inject constructor(
         val type = object : TypeToken<List<SatelliteResponse>>() {}.type
         val data = readJsonFromAssetsAsync(context, SATELLITES_FILE_NAME)
         return gson.fromJson(data, type)
+    }
+
+    override suspend fun fetchSatelliteDetail(id: Int): SatelliteDetailResponse? {
+        val type = object : TypeToken<List<SatelliteDetailResponse>>() {}.type
+        val data = readJsonFromAssetsAsync(context, SATELLITE_DETAIL_FILE_NAME)
+        val list: List<SatelliteDetailResponse> = gson.fromJson(data, type)
+        return list.firstOrNull { it.id == id }
     }
 
     companion object {

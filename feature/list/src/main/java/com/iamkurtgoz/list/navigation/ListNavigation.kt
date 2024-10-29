@@ -21,7 +21,7 @@ import com.iamkurtgoz.list.ListScreen
 import com.iamkurtgoz.navigation.ListScreenRoute
 
 fun NavGraphBuilder.listScreen(
-    navigateToDetail: (Int) -> Unit,
+    navigateToDetail: (Int, String) -> Unit,
 ) {
     composable<ListScreenRoute> {
         ListScreen(

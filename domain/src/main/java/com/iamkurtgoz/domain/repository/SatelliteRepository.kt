@@ -16,8 +16,10 @@
 package com.iamkurtgoz.domain.repository
 
 import com.iamkurtgoz.common.model.RestResult
+import com.iamkurtgoz.domain.model.SatelliteDetailUIModel
 import com.iamkurtgoz.domain.model.SatelliteUIModel
 
 interface SatelliteRepository {
     suspend fun fetchSatellites(): RestResult<List<SatelliteUIModel>>
+    suspend fun fetchSatelliteDetail(id: Int): RestResult<SatelliteDetailUIModel?>
 }

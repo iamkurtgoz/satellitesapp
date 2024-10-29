@@ -15,8 +15,10 @@
  */
 package com.iamkurtgoz.data.dataSource
 
+import com.iamkurtgoz.data.model.SatelliteDetailResponse
 import com.iamkurtgoz.data.model.SatelliteResponse
 
 interface RemoteDataSource {
     suspend fun fetchSatellites(): List<SatelliteResponse>
+    suspend fun fetchSatelliteDetail(id: Int): SatelliteDetailResponse?
 }

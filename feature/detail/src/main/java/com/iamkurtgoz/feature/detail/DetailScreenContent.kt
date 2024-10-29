@@ -31,6 +31,7 @@ import androidx.compose.ui.text.withStyle
 import com.iamkurtgoz.designsystem.internal.AppWithNightModePreviews
 import com.iamkurtgoz.designsystem.theme.AppTheme
 import com.iamkurtgoz.designsystem.theme.AppThemeSurface
+import com.iamkurtgoz.navigation.DetailScreenRoute
 import com.iamkurtgoz.resources.R as resourceR
 
 @Composable
@@ -39,94 +40,96 @@ internal fun DetailScreenContent(
     modifier: Modifier = Modifier,
     setEvent: (DetailScreenContract.Event) -> Unit,
 ) {
-    Column(
-        modifier = modifier
-            .fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
-    ) {
-        Text(
-            text = "Starship-1",
-            style = AppTheme.typography.displaySm.copy(
-                fontWeight = FontWeight.Bold,
-            ),
-        )
+    state.satelliteDetailModel?.let { safeSatelliteDetailModel ->
+        Column(
+            modifier = modifier
+                .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+        ) {
+            Text(
+                text = state.route.name,
+                style = AppTheme.typography.displaySm.copy(
+                    fontWeight = FontWeight.Bold,
+                ),
+            )
 
-        Text(
-            text = "01.12.2012",
-            style = AppTheme.typography.textSm.copy(
-                fontWeight = FontWeight.Light,
-            ),
-            color = AppTheme.colors.foregroundSecondary,
-            modifier = Modifier
-                .padding(top = AppTheme.spacing.spacingMedium),
-        )
+            Text(
+                text = safeSatelliteDetailModel.firstFlightDate,
+                style = AppTheme.typography.textSm.copy(
+                    fontWeight = FontWeight.Light,
+                ),
+                color = AppTheme.colors.foregroundSecondary,
+                modifier = Modifier
+                    .padding(top = AppTheme.spacing.spacingMedium),
+            )
 
-        Text(
-            text = buildAnnotatedString {
-                withStyle(
-                    style = SpanStyle(
-                        fontWeight = FontWeight.Bold,
-                    ),
-                    block = {
-                        append(stringResource(resourceR.string.height_mass))
-                    },
-                )
+            Text(
+                text = buildAnnotatedString {
+                    withStyle(
+                        style = SpanStyle(
+                            fontWeight = FontWeight.Bold,
+                        ),
+                        block = {
+                            append(stringResource(resourceR.string.height_mass))
+                        },
+                    )
 
-                append(DetailScreenContract.Static.DOUBLE_DOT)
+                    append(DetailScreenContract.Static.DOUBLE_DOT)
 
-                append("110/1135000")
-            },
-            modifier = Modifier
-                .padding(top = AppTheme.spacing.spacingHuge),
-            style = AppTheme.typography.textSm.copy(
-                fontWeight = FontWeight.Light,
-            ),
-        )
+                    append("${safeSatelliteDetailModel.height}/${safeSatelliteDetailModel.mass}")
+                },
+                modifier = Modifier
+                    .padding(top = AppTheme.spacing.spacingHuge),
+                style = AppTheme.typography.textSm.copy(
+                    fontWeight = FontWeight.Light,
+                ),
+            )
 
-        Text(
-            text = buildAnnotatedString {
-                withStyle(
-                    style = SpanStyle(
-                        fontWeight = FontWeight.Bold,
-                    ),
-                    block = {
-                        append(stringResource(resourceR.string.cost))
-                    },
-                )
+            Text(
+                text = buildAnnotatedString {
+                    withStyle(
+                        style = SpanStyle(
+                            fontWeight = FontWeight.Bold,
+                        ),
+                        block = {
+                            append(stringResource(resourceR.string.cost))
+                        },
+                    )
 
-                append(DetailScreenContract.Static.DOUBLE_DOT)
+                    append(DetailScreenContract.Static.DOUBLE_DOT)
 
-                append("8.300.000")
-            },
-            modifier = Modifier
-                .padding(top = AppTheme.spacing.spacingMedium),
-            style = AppTheme.typography.textSm.copy(
-                fontWeight = FontWeight.Light,
-            ),
-        )
+                    append(safeSatelliteDetailModel.costPerLaunch.toString())
+                },
+                modifier = Modifier
+                    .padding(top = AppTheme.spacing.spacingMedium),
+                style = AppTheme.typography.textSm.copy(
+                    fontWeight = FontWeight.Light,
+                ),
+            )
 
-        Text(
-            text = buildAnnotatedString {
-                withStyle(
-                    style = SpanStyle(
-                        fontWeight = FontWeight.Bold,
-                    ),
-                    block = {
-                        append(stringResource(resourceR.string.last_position))
-                    },
-                )
+            Text(
+                text = buildAnnotatedString {
+                    withStyle(
+                        style = SpanStyle(
+                            fontWeight = FontWeight.Bold,
+                        ),
+                        block = {
+                            append(stringResource(resourceR.string.last_position))
+                        },
+                    )
 
-                append(DetailScreenContract.Static.DOUBLE_DOT)
+                    append(DetailScreenContract.Static.DOUBLE_DOT)
 
-                append("(0.864328522,0.646450855)")
-            },
-            modifier = Modifier
-                .padding(top = AppTheme.spacing.spacingMedium),
-            style = AppTheme.typography.textSm.copy(
-                fontWeight = FontWeight.Light,
-            ),
-        )
+                    append("(0.864328522,0.646450855)")
+                },
+                modifier = Modifier
+                    .padding(top = AppTheme.spacing.spacingMedium),
+                style = AppTheme.typography.textSm.copy(
+                    fontWeight = FontWeight.Light,
+                ),
+            )
+        }
     }
 }
 
@@ -136,7 +139,10 @@ private fun Preview() {
     AppTheme {
         AppThemeSurface {
             DetailScreenContent(
-                state = DetailScreenContract.State(isLoading = true),
+                state = DetailScreenContract.State(
+                    isLoading = false,
+                    route = DetailScreenRoute(id = 1, name = "Starship-1"),
+                ),
                 setEvent = { },
             )
         }

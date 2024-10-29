@@ -17,12 +17,18 @@ package com.iamkurtgoz.feature.detail
 
 import androidx.compose.runtime.Immutable
 import com.iamkurtgoz.common.core.CoreState
+import com.iamkurtgoz.common.model.BaseError
+import com.iamkurtgoz.domain.model.SatelliteDetailUIModel
+import com.iamkurtgoz.navigation.DetailScreenRoute
 
 internal class DetailScreenContract {
     @Immutable
     data class State(
         override val isLoading: Boolean,
+        val route: DetailScreenRoute,
         val isInitialize: Boolean = false,
+        val satelliteDetailModel: SatelliteDetailUIModel? = null,
+        val error: BaseError? = null,
     ) : CoreState.ViewState
 
     sealed class SideEffect : CoreState.SideEffect {
@@ -31,6 +37,7 @@ internal class DetailScreenContract {
 
     sealed class Event : CoreState.Event {
         data object PopBackStack : Event()
+        data object Reload : Event()
     }
 
     object Static {

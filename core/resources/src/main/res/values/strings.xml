@@ -23,4 +23,7 @@
     <string name="cost">Cost</string>
     <string name="last_position">Last Position</string>
     <string name="detail_screen_title">Satellite Detail</string>
+    <string name="error_title">Error!</string>
+    <string name="error_message">An unknown error was received</string>
+    <string name="try_again_button">Try Again</string>
 </resources>

@@ -13,19 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.iamkurtgoz.designsystem.theme.color
+package com.iamkurtgoz.domain.model
 
-import androidx.compose.runtime.Composable
-import com.iamkurtgoz.designsystem.theme.AppColors
-
-val AppColorPalette.darkColors: AppColors
-    @Composable
-    get() = AppColors(
-        primaryColor = gray950,
-        backgroundPrimary = gray950,
-        foregroundPrimary = white,
-        foregroundSecondary = gray25,
-        searchBarBackground = white92,
-        buttonBackground = white92,
-        buttonForeground = gray950,
-    )
+data class SatelliteDetailUIModel(
+    val id: Int,
+    val costPerLaunch: Int,
+    val firstFlightDate: String,
+    val height: Int,
+    val mass: Int,
+)

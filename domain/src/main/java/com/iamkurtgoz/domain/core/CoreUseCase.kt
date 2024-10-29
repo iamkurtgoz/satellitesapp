@@ -35,4 +35,14 @@ open class CoreUseCase(@IoDispatcher val coroutineDispatcher: CoroutineDispatche
     }.catch { throwable ->
         emit(RestResult.Error(throwable.toBaseError()))
     }.flowOn(coroutineDispatcher)
+
+    inline fun <reified T : Any> prepareNullable(
+        crossinline block: suspend () -> RestResult<T?>,
+    ): Flow<RestResult<T?>> = flow {
+        this.emit(block.invoke())
+    }.onStart {
+        emit(RestResult.Loading)
+    }.catch { throwable ->
+        emit(RestResult.Error(throwable.toBaseError()))
+    }.flowOn(coroutineDispatcher)
 }

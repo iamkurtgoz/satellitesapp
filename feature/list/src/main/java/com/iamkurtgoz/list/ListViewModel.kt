@@ -82,7 +82,10 @@ internal class ListViewModel @Inject constructor(
                 updateSearchKeyTextState(event.input)
             }
             is ListScreenContract.Event.NavigateToDetail -> {
-                navigateToDetail(event.id)
+                navigateToDetail(event.id, event.name)
+            }
+            is ListScreenContract.Event.Reload -> {
+                reload()
             }
         }
     }
@@ -95,10 +98,15 @@ internal class ListViewModel @Inject constructor(
         _searchKeyTextState.value = input
     }
 
-    private fun navigateToDetail(id: Int) {
+    private fun navigateToDetail(id: Int, name: String) {
         if (_satelliteList.value.any { it.id == id }) {
-            setSideEffect(ListScreenContract.SideEffect.NavigateToDetail(id = id))
+            setSideEffect(ListScreenContract.SideEffect.NavigateToDetail(id = id, name = name))
         }
+    }
+
+    private fun reload() {
+        updateState { it.copy(error = null) }
+        fetchList()
     }
 
     private fun updateIsSearching(isSearching: Boolean) {
@@ -112,8 +120,9 @@ internal class ListViewModel @Inject constructor(
             .onLoading {
                 setLoading(true)
             }
-            .onError {
+            .onError { error ->
                 setLoading(false)
+                updateState { it.copy(error = error) }
             }
             .callWithSuccess { response ->
                 _satelliteList.value = response.toPersistentList()

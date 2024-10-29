@@ -41,8 +41,8 @@ internal fun AppScreenContent(
             builder = {
                 // List Screen
                 listScreen(
-                    navigateToDetail = { id ->
-                        navigationController.navigateToDetailScreen(id = id)
+                    navigateToDetail = { id, name ->
+                        navigationController.navigateToDetailScreen(id = id, name = name)
                     },
                 )
 

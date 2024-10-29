@@ -15,18 +15,11 @@
  */
 package com.iamkurtgoz.list
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ProgressIndicatorDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.iamkurtgoz.designsystem.internal.AppWithNightModePreviews
 import com.iamkurtgoz.designsystem.theme.AppTheme
@@ -62,28 +55,11 @@ internal fun ListScreenContent(
                     isActive = item.active,
                     title = item.name,
                     onClickAction = {
-                        val event = ListScreenContract.Event.NavigateToDetail(id = item.id)
+                        val event = ListScreenContract.Event.NavigateToDetail(id = item.id, name = item.name)
                         setEvent.invoke(event)
                     },
                 )
             }
-        }
-    }
-
-    AnimatedVisibility(
-        visible = state.isLoading || state.isSearching,
-        enter = fadeIn(),
-        exit = fadeOut(),
-    ) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize(),
-            contentAlignment = Alignment.Center,
-        ) {
-            CircularProgressIndicator(
-                color = AppTheme.colors.foregroundPrimary,
-                trackColor = ProgressIndicatorDefaults.circularIndeterminateTrackColor,
-            )
         }
     }
 }

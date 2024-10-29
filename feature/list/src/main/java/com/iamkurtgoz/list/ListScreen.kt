@@ -15,15 +15,24 @@
  */
 package com.iamkurtgoz.list
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContent
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ProgressIndicatorDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.iamkurtgoz.commonui.component.ErrorComponent
 import com.iamkurtgoz.commonui.component.SearchComponent
 import com.iamkurtgoz.commonui.extension.observeSideEffect
 import com.iamkurtgoz.designsystem.internal.AppWithNightModePreviews
@@ -37,7 +46,7 @@ import kotlinx.collections.immutable.persistentListOf
 @Composable
 internal fun ListScreen(
     viewModel: ListViewModel = hiltViewModel(),
-    navigateToDetail: (Int) -> Unit,
+    navigateToDetail: (Int, String) -> Unit,
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val satelliteList by viewModel.satelliteList.collectAsStateWithLifecycle()
@@ -46,7 +55,7 @@ internal fun ListScreen(
     viewModel.sideEffect.observeSideEffect {
         when (it) {
             is ListScreenContract.SideEffect.NavigateToDetail -> {
-                navigateToDetail.invoke(it.id)
+                navigateToDetail.invoke(it.id, it.name)
             }
         }
     }
@@ -87,6 +96,45 @@ private fun Scaffold(
             satelliteList = satelliteList,
             setEvent = setEvent,
         )
+    }
+
+    AnimatedVisibility(
+        visible = state.error != null,
+        enter = fadeIn(),
+        exit = fadeOut(),
+    ) {
+        state.error?.message?.let { message ->
+            if (message.isEmpty()) {
+                ErrorComponent.Primary(modifier = Modifier.fillMaxSize()) {
+                    setEvent.invoke(ListScreenContract.Event.Reload)
+                }
+            } else {
+                ErrorComponent.Secondary(
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    message = message,
+                ) {
+                    setEvent.invoke(ListScreenContract.Event.Reload)
+                }
+            }
+        }
+    }
+
+    AnimatedVisibility(
+        visible = state.isLoading || state.isSearching,
+        enter = fadeIn(),
+        exit = fadeOut(),
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize(),
+            contentAlignment = Alignment.Center,
+        ) {
+            CircularProgressIndicator(
+                color = AppTheme.colors.foregroundPrimary,
+                trackColor = ProgressIndicatorDefaults.circularIndeterminateTrackColor,
+            )
+        }
     }
 }
 

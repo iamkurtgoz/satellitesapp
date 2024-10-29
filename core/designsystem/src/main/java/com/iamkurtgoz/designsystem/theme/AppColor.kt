@@ -31,6 +31,8 @@ class AppColors(
     foregroundPrimary: Color,
     foregroundSecondary: Color,
     searchBarBackground: Color,
+    buttonBackground: Color,
+    buttonForeground: Color,
 ) {
     var primaryColor by mutableStateOf(primaryColor)
         private set
@@ -42,6 +44,10 @@ class AppColors(
         private set
     var searchBarBackground by mutableStateOf(searchBarBackground)
         private set
+    var buttonBackground by mutableStateOf(buttonBackground)
+        private set
+    var buttonForeground by mutableStateOf(buttonForeground)
+        private set
 
     fun update(other: AppColors) {
         primaryColor = other.primaryColor
@@ -49,6 +55,8 @@ class AppColors(
         foregroundPrimary = other.foregroundPrimary
         foregroundSecondary = other.foregroundSecondary
         searchBarBackground = other.searchBarBackground
+        buttonBackground = other.buttonBackground
+        buttonForeground = other.buttonForeground
     }
 }
 

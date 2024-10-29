@@ -22,8 +22,8 @@ import androidx.navigation.compose.composable
 import com.iamkurtgoz.feature.detail.DetailScreen
 import com.iamkurtgoz.navigation.DetailScreenRoute
 
-fun NavController.navigateToDetailScreen(id: Int, navOptions: NavOptions? = null) {
-    val route = DetailScreenRoute(id = id)
+fun NavController.navigateToDetailScreen(id: Int, name: String, navOptions: NavOptions? = null) {
+    val route = DetailScreenRoute(id = id, name = name)
     this.navigate(route, navOptions)
 }
 

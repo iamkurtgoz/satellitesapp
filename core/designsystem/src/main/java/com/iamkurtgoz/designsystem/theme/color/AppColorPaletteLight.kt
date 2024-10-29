@@ -26,4 +26,6 @@ val AppColorPalette.lightColors: AppColors
         foregroundPrimary = gray950,
         foregroundSecondary = gray25,
         searchBarBackground = white92,
+        buttonBackground = gray950,
+        buttonForeground = white,
     )

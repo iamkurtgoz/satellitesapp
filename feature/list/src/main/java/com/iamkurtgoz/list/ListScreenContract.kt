@@ -17,6 +17,7 @@ package com.iamkurtgoz.list
 
 import androidx.compose.runtime.Immutable
 import com.iamkurtgoz.common.core.CoreState
+import com.iamkurtgoz.common.model.BaseError
 
 internal class ListScreenContract {
     @Immutable
@@ -24,15 +25,17 @@ internal class ListScreenContract {
         override val isLoading: Boolean,
         val isInitialize: Boolean = false,
         val isSearching: Boolean = false,
+        val error: BaseError? = null,
     ) : CoreState.ViewState
 
     sealed class SideEffect : CoreState.SideEffect {
-        data class NavigateToDetail(val id: Int) : SideEffect()
+        data class NavigateToDetail(val id: Int, val name: String) : SideEffect()
     }
 
     sealed class Event : CoreState.Event {
         data class UpdateSearchKeyTextState(val input: String) : Event()
-        data class NavigateToDetail(val id: Int) : Event()
+        data class NavigateToDetail(val id: Int, val name: String) : Event()
+        data object Reload : Event()
     }
 
     object Static {

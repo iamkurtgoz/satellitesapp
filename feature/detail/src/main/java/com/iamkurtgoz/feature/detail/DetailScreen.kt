@@ -15,21 +15,31 @@
  */
 package com.iamkurtgoz.feature.detail
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ProgressIndicatorDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.iamkurtgoz.commonui.component.AppToolbar
 import com.iamkurtgoz.commonui.component.AppToolbarFields
+import com.iamkurtgoz.commonui.component.ErrorComponent
 import com.iamkurtgoz.commonui.extension.observeSideEffect
 import com.iamkurtgoz.designsystem.internal.AppWithNightModePreviews
 import com.iamkurtgoz.designsystem.theme.AppTheme
 import com.iamkurtgoz.designsystem.theme.AppThemeScaffold
 import com.iamkurtgoz.designsystem.theme.AppThemeSurface
+import com.iamkurtgoz.navigation.DetailScreenRoute
 import com.iamkurtgoz.resources.R as resourceR
 
 @Composable
@@ -71,7 +81,7 @@ private fun Scaffold(
                 centerContent = {
                     AppToolbarFields.TitleWithSubTitle(
                         text = stringResource(resourceR.string.detail_screen_title),
-                        subText = "Starship-1",
+                        subText = state.route.name,
                     )
                 },
             )
@@ -84,6 +94,45 @@ private fun Scaffold(
             setEvent = setEvent,
         )
     }
+
+    AnimatedVisibility(
+        visible = state.error != null,
+        enter = fadeIn(),
+        exit = fadeOut(),
+    ) {
+        state.error?.message?.let { message ->
+            if (message.isEmpty()) {
+                ErrorComponent.Primary(modifier = Modifier.fillMaxSize()) {
+                    setEvent.invoke(DetailScreenContract.Event.Reload)
+                }
+            } else {
+                ErrorComponent.Secondary(
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    message = message,
+                ) {
+                    setEvent.invoke(DetailScreenContract.Event.Reload)
+                }
+            }
+        }
+    }
+
+    AnimatedVisibility(
+        visible = state.isLoading,
+        enter = fadeIn(),
+        exit = fadeOut(),
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize(),
+            contentAlignment = Alignment.Center,
+        ) {
+            CircularProgressIndicator(
+                color = AppTheme.colors.foregroundPrimary,
+                trackColor = ProgressIndicatorDefaults.circularIndeterminateTrackColor,
+            )
+        }
+    }
 }
 
 @AppWithNightModePreviews
@@ -92,7 +141,10 @@ private fun Preview() {
     AppTheme {
         AppThemeSurface {
             Scaffold(
-                state = DetailScreenContract.State(isLoading = false),
+                state = DetailScreenContract.State(
+                    isLoading = false,
+                    route = DetailScreenRoute(id = 1, name = "Starship-1"),
+                ),
                 setEvent = { },
             )
         }

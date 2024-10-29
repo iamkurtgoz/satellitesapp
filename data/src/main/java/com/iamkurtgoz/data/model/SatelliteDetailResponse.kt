@@ -15,7 +15,7 @@
  */
 package com.iamkurtgoz.data.model
 
-data class SatelliteDetail(
+data class SatelliteDetailResponse(
     val cost_per_launch: Int,
     val first_flight: String,
     val height: Int,
