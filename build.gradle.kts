@@ -2,7 +2,7 @@ import com.android.build.gradle.AppExtension
 import com.android.build.gradle.AppPlugin
 import com.android.build.gradle.LibraryExtension
 import com.android.build.gradle.LibraryPlugin
-//import dev.iurysouza.modulegraph.Theme
+import dev.iurysouza.modulegraph.Theme
 import java.util.Properties
 
 plugins {
@@ -19,7 +19,7 @@ plugins {
     alias(libs.plugins.detekt) apply false
     alias(libs.plugins.ktlint) apply false
     alias(libs.plugins.spotless)
-    //alias(libs.plugins.dev.iurysouza.modulegraph)
+    alias(libs.plugins.dev.iurysouza.modulegraph)
 }
 
 subprojects {
@@ -65,7 +65,6 @@ fun defaultSecrets(): Properties {
     properties.load(keystoreFile.inputStream())
     return properties
 }
-/*
 
 moduleGraphConfig {
     readmePath.set("./README.md")
@@ -84,5 +83,3 @@ moduleGraphConfig {
         ),
     )
 }
-
- */
