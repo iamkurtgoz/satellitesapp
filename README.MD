@@ -12,23 +12,31 @@ graph LR
   subgraph :core
     :core:navigation["navigation"]
     :core:dummy["dummy"]
+    :core:local["local"]
     :core:common["common"]
     :core:common-ui["common-ui"]
     :core:designsystem["designsystem"]
     :core:resources["resources"]
-    :core:local["local"]
   end
   subgraph :feature
     :feature:list["list"]
+    :feature:detail["detail"]
   end
   :core:navigation --> :domain
   :core:dummy --> :data
+  :core:local --> :data
   :feature:list --> :core:common
   :feature:list --> :core:common-ui
   :feature:list --> :core:navigation
   :feature:list --> :domain
   :feature:list --> :core:designsystem
   :feature:list --> :core:resources
+  :feature:detail --> :core:common
+  :feature:detail --> :core:common-ui
+  :feature:detail --> :core:navigation
+  :feature:detail --> :domain
+  :feature:detail --> :core:designsystem
+  :feature:detail --> :core:resources
   :core:resources --> :core:common
   :core:common-ui --> :core:designsystem
   :core:common-ui --> :domain
@@ -44,10 +52,10 @@ graph LR
   :app --> :core:local
   :app --> :core:dummy
   :app --> :feature:list
+  :app --> :feature:detail
   :data --> :domain
   :data --> :core:common
   :data --> :core:resources
-  :data --> :core:local
   :domain --> :core:common
   :core:designsystem --> :domain
 ```
