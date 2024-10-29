@@ -32,6 +32,7 @@ internal class ListScreenContract {
 
     sealed class Event : CoreState.Event {
         data class UpdateSearchKeyTextState(val input: String) : Event()
+        data class NavigateToDetail(val id: Int) : Event()
     }
 
     object Static {

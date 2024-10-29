@@ -13,11 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.iamkurtgoz.navigation
+package com.iamkurtgoz.feature.detail
 
-import androidx.annotation.Keep
-import kotlinx.serialization.Serializable
+import androidx.compose.runtime.Immutable
+import com.iamkurtgoz.common.core.CoreState
 
-@Keep
-@Serializable
-data object ListScreenRoute
+internal class DetailScreenContract {
+    @Immutable
+    data class State(
+        override val isLoading: Boolean,
+        val isInitialize: Boolean = false,
+    ) : CoreState.ViewState
+
+    sealed class SideEffect : CoreState.SideEffect {
+        data object PopBackStack : SideEffect()
+    }
+
+    sealed class Event : CoreState.Event {
+        data object PopBackStack : Event()
+    }
+
+    object Static {
+        const val DOUBLE_DOT: String = ":"
+    }
+}

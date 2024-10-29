@@ -120,6 +120,7 @@ dependencies {
 
     // Projects - Feature
     implementation(projects.feature.list)
+    implementation(projects.feature.detail)
 
     // AndroidX
     implementation(libs.androidx.core.splashscreen)

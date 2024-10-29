@@ -81,6 +81,9 @@ internal class ListViewModel @Inject constructor(
             is ListScreenContract.Event.UpdateSearchKeyTextState -> {
                 updateSearchKeyTextState(event.input)
             }
+            is ListScreenContract.Event.NavigateToDetail -> {
+                navigateToDetail(event.id)
+            }
         }
     }
 
@@ -90,6 +93,12 @@ internal class ListViewModel @Inject constructor(
 
     private fun updateSearchKeyTextState(input: String) {
         _searchKeyTextState.value = input
+    }
+
+    private fun navigateToDetail(id: Int) {
+        if (_satelliteList.value.any { it.id == id }) {
+            setSideEffect(ListScreenContract.SideEffect.NavigateToDetail(id = id))
+        }
     }
 
     private fun updateIsSearching(isSearching: Boolean) {

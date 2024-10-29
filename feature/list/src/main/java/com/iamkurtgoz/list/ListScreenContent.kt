@@ -41,6 +41,7 @@ internal fun ListScreenContent(
     state: ListScreenContract.State,
     satelliteList: ImmutableList<SatelliteUIModel>,
     modifier: Modifier = Modifier,
+    setEvent: (ListScreenContract.Event) -> Unit,
 ) {
     LazyColumn(
         modifier = modifier
@@ -60,7 +61,10 @@ internal fun ListScreenContent(
                     index = index,
                     isActive = item.active,
                     title = item.name,
-                    onClickAction = { },
+                    onClickAction = {
+                        val event = ListScreenContract.Event.NavigateToDetail(id = item.id)
+                        setEvent.invoke(event)
+                    },
                 )
             }
         }
@@ -92,6 +96,7 @@ private fun Preview() {
             ListScreenContent(
                 state = ListScreenContract.State(isLoading = true),
                 satelliteList = persistentListOf(),
+                setEvent = { },
             )
         }
     }

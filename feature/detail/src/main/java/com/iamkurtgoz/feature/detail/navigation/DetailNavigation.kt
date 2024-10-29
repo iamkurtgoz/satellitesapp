@@ -13,19 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.iamkurtgoz.list.navigation
+package com.iamkurtgoz.feature.detail.navigation
 
+import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import com.iamkurtgoz.list.ListScreen
-import com.iamkurtgoz.navigation.ListScreenRoute
+import com.iamkurtgoz.feature.detail.DetailScreen
+import com.iamkurtgoz.navigation.DetailScreenRoute
 
-fun NavGraphBuilder.listScreen(
-    navigateToDetail: (Int) -> Unit,
+fun NavController.navigateToDetailScreen(id: Int, navOptions: NavOptions? = null) {
+    val route = DetailScreenRoute(id = id)
+    this.navigate(route, navOptions)
+}
+
+fun NavGraphBuilder.detailScreen(
+    popBackStack: () -> Unit,
 ) {
-    composable<ListScreenRoute> {
-        ListScreen(
-            navigateToDetail = navigateToDetail,
+    composable<DetailScreenRoute> {
+        DetailScreen(
+            popBackStack = popBackStack,
         )
     }
 }

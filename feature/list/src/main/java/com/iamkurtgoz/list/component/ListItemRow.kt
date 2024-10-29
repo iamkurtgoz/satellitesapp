@@ -42,7 +42,7 @@ import com.iamkurtgoz.designsystem.theme.AppThemeScaffold
 import com.iamkurtgoz.resources.R as resourceR
 
 @Composable
-fun ListItemRow(
+internal fun ListItemRow(
     index: Int,
     isActive: Boolean,
     title: String,

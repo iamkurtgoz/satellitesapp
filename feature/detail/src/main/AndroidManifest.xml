@@ -14,13 +14,6 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 -->
-<resources>
-    <string name="app_name">Satellites</string>
-    <string name="search_hint">Search</string>
-    <string name="active_status">Active</string>
-    <string name="passive_status">Passive</string>
-    <string name="height_mass">Height/Mass</string>
-    <string name="cost">Cost</string>
-    <string name="last_position">Last Position</string>
-    <string name="detail_screen_title">Satellite Detail</string>
-</resources>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+</manifest>

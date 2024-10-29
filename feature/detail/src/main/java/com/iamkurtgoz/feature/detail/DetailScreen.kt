@@ -13,78 +13,74 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.iamkurtgoz.list
+package com.iamkurtgoz.feature.detail
 
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeContent
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.iamkurtgoz.commonui.component.SearchComponent
+import com.iamkurtgoz.commonui.component.AppToolbar
+import com.iamkurtgoz.commonui.component.AppToolbarFields
 import com.iamkurtgoz.commonui.extension.observeSideEffect
 import com.iamkurtgoz.designsystem.internal.AppWithNightModePreviews
 import com.iamkurtgoz.designsystem.theme.AppTheme
 import com.iamkurtgoz.designsystem.theme.AppThemeScaffold
 import com.iamkurtgoz.designsystem.theme.AppThemeSurface
-import com.iamkurtgoz.domain.model.SatelliteUIModel
-import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
+import com.iamkurtgoz.resources.R as resourceR
 
 @Composable
-internal fun ListScreen(
-    viewModel: ListViewModel = hiltViewModel(),
-    navigateToDetail: (Int) -> Unit,
+internal fun DetailScreen(
+    viewModel: DetailViewModel = hiltViewModel(),
+    popBackStack: () -> Unit,
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
-    val satelliteList by viewModel.satelliteList.collectAsStateWithLifecycle()
-    val searchKeyTextState by viewModel.searchKeyTextState.collectAsStateWithLifecycle()
 
     viewModel.sideEffect.observeSideEffect {
         when (it) {
-            is ListScreenContract.SideEffect.NavigateToDetail -> {
-                navigateToDetail.invoke(it.id)
+            is DetailScreenContract.SideEffect.PopBackStack -> {
+                popBackStack.invoke()
             }
         }
     }
 
     Scaffold(
         state = state,
-        satelliteList = satelliteList,
-        searchKeyTextState = searchKeyTextState,
         setEvent = viewModel::setEvent,
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun Scaffold(
-    state: ListScreenContract.State,
-    satelliteList: ImmutableList<SatelliteUIModel>,
-    searchKeyTextState: String,
-    setEvent: (ListScreenContract.Event) -> Unit,
+    state: DetailScreenContract.State,
+    setEvent: (DetailScreenContract.Event) -> Unit,
 ) {
-    val topPadding = WindowInsets.safeContent.asPaddingValues().calculateTopPadding()
     AppThemeScaffold(
         topBar = {
-            SearchComponent(
-                modifier = Modifier
-                    .padding(top = topPadding)
-                    .padding(horizontal = AppTheme.spacing.spacingMedium),
-                value = searchKeyTextState,
-                onValueChange = {
-                    setEvent.invoke(ListScreenContract.Event.UpdateSearchKeyTextState(it))
+            AppToolbar.Toolbar(
+                modifier = Modifier,
+                leftContent = {
+                    AppToolbarFields.NavigateIcon {
+                        setEvent.invoke(DetailScreenContract.Event.PopBackStack)
+                    }
+                },
+                centerContent = {
+                    AppToolbarFields.TitleWithSubTitle(
+                        text = stringResource(resourceR.string.detail_screen_title),
+                        subText = "Starship-1",
+                    )
                 },
             )
         },
     ) { padding ->
-        ListScreenContent(
+        DetailScreenContent(
             modifier = Modifier
                 .padding(padding),
             state = state,
-            satelliteList = satelliteList,
             setEvent = setEvent,
         )
     }
@@ -96,9 +92,7 @@ private fun Preview() {
     AppTheme {
         AppThemeSurface {
             Scaffold(
-                state = ListScreenContract.State(isLoading = false),
-                satelliteList = persistentListOf(),
-                searchKeyTextState = "",
+                state = DetailScreenContract.State(isLoading = false),
                 setEvent = { },
             )
         }

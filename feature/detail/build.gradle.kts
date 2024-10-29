@@ -13,11 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.iamkurtgoz.navigation
+plugins {
+    id("com.iamkurtgoz.android.feature")
+    id("com.iamkurtgoz.android.library.compose")
+}
 
-import androidx.annotation.Keep
-import kotlinx.serialization.Serializable
+android {
+    namespace = "com.iamkurtgoz.feature.detail"
+    hilt.enableAggregatingTask = true
+}
 
-@Keep
-@Serializable
-data object ListScreenRoute
+dependencies {
+    // Projects - Core
+    implementation(projects.domain)
+    implementation(projects.core.resources)
+}

@@ -17,13 +17,13 @@ package com.iamkurtgoz.satellites.presentation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
-import androidx.navigation.NavOptions
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.iamkurtgoz.designsystem.theme.AppTheme
 import com.iamkurtgoz.designsystem.theme.AppThemeScaffold
+import com.iamkurtgoz.feature.detail.navigation.detailScreen
+import com.iamkurtgoz.feature.detail.navigation.navigateToDetailScreen
 import com.iamkurtgoz.list.navigation.listScreen
 import com.iamkurtgoz.navigation.AppRoute
 import com.iamkurtgoz.navigation.ListScreenRoute
@@ -40,22 +40,21 @@ internal fun AppScreenContent(
             startDestination = ListScreenRoute,
             builder = {
                 // List Screen
-                listScreen()
+                listScreen(
+                    navigateToDetail = { id ->
+                        navigationController.navigateToDetailScreen(id = id)
+                    },
+                )
+
+                // Detail Screen
+                detailScreen(
+                    popBackStack = {
+                        navigationController.popBackStack()
+                    },
+                )
             },
         )
     }
-}
-
-private fun NavController.navigatePopUpToInclusive(): NavOptions.Builder {
-    val option = NavOptions.Builder()
-    option.setPopUpTo(currentDestination?.route, true)
-    return option
-}
-
-fun NavController.navigateAndClearBackStack(): NavOptions.Builder {
-    val option = NavOptions.Builder()
-    option.setPopUpTo(destinationId = 0, inclusive = true, saveState = false)
-    return option
 }
 
 @Preview(showBackground = true)
