@@ -1,5 +1,4 @@
 [versions]
-lottieVersion = "6.5.1"
 androidGradlePlugin = "8.7.1"
 kotlin = "2.0.21"
 ksp = "2.0.21-1.0.26"
@@ -9,7 +8,6 @@ androidxComposeBom = "2024.10.00"
 androidxComposeRuntimeTracing = "1.7.4"
 androidxCore = "1.13.1"
 androidxCoreSplashscreen = "1.0.1"
-androidxDataStore = "1.1.1"
 androidxHiltNavigationCompose = "1.2.0"
 androidxLifecycle = "2.8.6"
 androidxNavigation = "2.8.3"
@@ -19,7 +17,6 @@ androidxTestExt = "1.2.1"
 androidxTestRules = "1.6.1"
 androidxTestRunner = "1.6.2"
 androidxUiAutomator = "2.3.0"
-coil = "2.7.0"
 hilt = "2.52"
 hiltExt = "1.2.0"
 junit4 = "4.13.2"
@@ -37,12 +34,7 @@ timberVersion = "5.0.1"
 detekt = "1.23.6"
 modulegraph = "0.10.1"
 javaxInject = "1"
-retrofit = "2.11.0"
-okhttp3 = "4.12.0"
 gson = "2.11.0"
-gsonConverter = "2.11.0"
-chucker = "4.0.0"
-revenuecat = "8.7.0"
 junit = "1.2.1"
 material = "1.12.0"
 secrets = "2.0.1"
@@ -81,11 +73,6 @@ androidx-navigation-safeArgs = { group = "androidx.navigation", name = "navigati
 androidx-navigation-testing = { group = "androidx.navigation", name = "navigation-testing", version.ref = "androidxNavigation" }
 
 #
-# Animation Dependencies
-#
-airbnb-lottie-compose = { group = "com.airbnb.android", name = "lottie-compose", version.ref = "lottieVersion" }
-
-#
 # Hilt Dependencies
 #
 androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "androidxHiltNavigationCompose" }
@@ -114,15 +101,6 @@ androidx-test-uiautomator = { group = "androidx.test.uiautomator", name = "uiaut
 junit4 = { group = "junit", name = "junit", version.ref = "junit4" }
 
 #
-# Coil Dependencies
-#
-coil-kt = { group = "io.coil-kt", name = "coil", version.ref = "coil" }
-coil-kt-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
-coil-kt-svg = { group = "io.coil-kt", name = "coil-svg", version.ref = "coil" }
-coil-kt-video = { group = "io.coil-kt", name = "coil-video", version.ref = "coil" }
-coil-kt-gif = { group = "io.coil-kt", name = "coil-gif", version.ref = "coil" }
-
-#
 # Kotlin & Coroutine Dependencies
 #
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinxCoroutines" }
@@ -149,23 +127,7 @@ room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "
 #
 # Network Dependencies
 #
-network-retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
-network-okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp3" }
 network-gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
-network-gson-conventer = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "gsonConverter" }
-network-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp3" }
-
-#
-# Chucker
-#
-chucker-library = { group = "com.github.chuckerteam.chucker", name = "library", version.ref = "chucker" }
-chucker-no-op = { group = "com.github.chuckerteam.chucker", name = "library-no-op", version.ref = "chucker" }
-
-#
-# RevenueCat
-#
-revenuecat-core = { group = "com.revenuecat.purchases", name = "purchases", version.ref = "revenuecat" }
-revenuecat-ui = { group = "com.revenuecat.purchases", name = "purchases-ui", version.ref = "revenuecat" }
 
 #
 # Other
