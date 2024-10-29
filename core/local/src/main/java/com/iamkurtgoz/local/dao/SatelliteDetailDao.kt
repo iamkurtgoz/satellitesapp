@@ -13,25 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-plugins {
-    id("com.iamkurtgoz.android.library")
-    id("com.iamkurtgoz.android.sub.hilt")
-}
+package com.iamkurtgoz.local.dao
 
-android {
-    namespace = "com.iamkurtgoz.local"
-    hilt.enableAggregatingTask = true
-}
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import com.iamkurtgoz.local.entity.SatelliteDetailEntity
 
-dependencies {
-    // Projects
-    implementation(projects.data)
+@Dao
+interface SatelliteDetailDao {
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(data: SatelliteDetailEntity)
 
-    // Network
-    implementation(libs.network.gson)
-
-    // Local
-    implementation(libs.room.runtime)
-    implementation(libs.room.ktx)
-    ksp(libs.room.compiler)
+    @Query("SELECT * FROM TableSatelliteDetailEntity WHERE id = :id ORDER BY id")
+    suspend fun fetch(id: Int?): SatelliteDetailEntity?
 }

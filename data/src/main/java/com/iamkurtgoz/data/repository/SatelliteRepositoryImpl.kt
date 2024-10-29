@@ -18,6 +18,7 @@ package com.iamkurtgoz.data.repository
 import com.iamkurtgoz.common.model.RestResult
 import com.iamkurtgoz.common.model.mapOnSuccess
 import com.iamkurtgoz.data.core.CoreRepository
+import com.iamkurtgoz.data.dataSource.LocalDataSource
 import com.iamkurtgoz.data.dataSource.RemoteDataSource
 import com.iamkurtgoz.data.di.DummyRemoteDataSource
 import com.iamkurtgoz.data.mapper.toUIModel
@@ -28,6 +29,7 @@ import javax.inject.Inject
 
 internal class SatelliteRepositoryImpl @Inject constructor(
     @DummyRemoteDataSource private val remoteDataSource: RemoteDataSource,
+    private val localDataSource: LocalDataSource,
 ) : SatelliteRepository, CoreRepository() {
     override suspend fun fetchSatellites(): RestResult<List<SatelliteUIModel>> {
         return requestAny { remoteDataSource.fetchSatellites() }
@@ -37,9 +39,20 @@ internal class SatelliteRepositoryImpl @Inject constructor(
     }
 
     override suspend fun fetchSatelliteDetail(id: Int): RestResult<SatelliteDetailUIModel?> {
-        return requestAny { remoteDataSource.fetchSatelliteDetail(id = id) }
-            .mapOnSuccess { response ->
-                response?.toUIModel()
-            }
+        val cache = localDataSource.fetch(id = id)
+        return cache?.let {
+            requestAny { cache }
+                .mapOnSuccess { response ->
+                    response.toUIModel()
+                }
+        } ?: run {
+            requestAny { remoteDataSource.fetchSatelliteDetail(id = id) }
+                .mapOnSuccess { response ->
+                    response?.let {
+                        localDataSource.insert(it)
+                    }
+                    response?.toUIModel()
+                }
+        }
     }
 }

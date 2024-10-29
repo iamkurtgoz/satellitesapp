@@ -13,25 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-plugins {
-    id("com.iamkurtgoz.android.library")
-    id("com.iamkurtgoz.android.sub.hilt")
-}
+package com.iamkurtgoz.data.dataSource
 
-android {
-    namespace = "com.iamkurtgoz.local"
-    hilt.enableAggregatingTask = true
-}
+import com.iamkurtgoz.data.model.SatelliteDetailResponse
 
-dependencies {
-    // Projects
-    implementation(projects.data)
-
-    // Network
-    implementation(libs.network.gson)
-
-    // Local
-    implementation(libs.room.runtime)
-    implementation(libs.room.ktx)
-    ksp(libs.room.compiler)
+interface LocalDataSource {
+    suspend fun insert(data: SatelliteDetailResponse)
+    suspend fun fetch(id: Int?): SatelliteDetailResponse?
 }

@@ -28,7 +28,6 @@ dependencies {
     implementation(projects.domain)
     implementation(projects.core.common)
     implementation(projects.core.resources)
-    implementation(projects.core.local)
 
     // AndroidX
     implementation(libs.androidx.core.ktx)

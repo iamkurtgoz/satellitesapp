@@ -13,25 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-plugins {
-    id("com.iamkurtgoz.android.library")
-    id("com.iamkurtgoz.android.sub.hilt")
-}
+package com.iamkurtgoz.data.di
 
-android {
-    namespace = "com.iamkurtgoz.local"
-    hilt.enableAggregatingTask = true
-}
+import javax.inject.Qualifier
 
-dependencies {
-    // Projects
-    implementation(projects.data)
-
-    // Network
-    implementation(libs.network.gson)
-
-    // Local
-    implementation(libs.room.runtime)
-    implementation(libs.room.ktx)
-    ksp(libs.room.compiler)
-}
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class DatabaseName

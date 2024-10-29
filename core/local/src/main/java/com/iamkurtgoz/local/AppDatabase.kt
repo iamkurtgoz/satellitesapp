@@ -13,25 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-plugins {
-    id("com.iamkurtgoz.android.library")
-    id("com.iamkurtgoz.android.sub.hilt")
-}
+package com.iamkurtgoz.local
 
-android {
-    namespace = "com.iamkurtgoz.local"
-    hilt.enableAggregatingTask = true
-}
+import androidx.room.Database
+import androidx.room.RoomDatabase
+import com.iamkurtgoz.local.dao.SatelliteDetailDao
+import com.iamkurtgoz.local.entity.SatelliteDetailEntity
 
-dependencies {
-    // Projects
-    implementation(projects.data)
-
-    // Network
-    implementation(libs.network.gson)
-
-    // Local
-    implementation(libs.room.runtime)
-    implementation(libs.room.ktx)
-    ksp(libs.room.compiler)
+@Database(entities = [SatelliteDetailEntity::class], version = 1)
+internal abstract class AppDatabase : RoomDatabase() {
+    abstract fun getSatelliteDetailDao(): SatelliteDetailDao
 }

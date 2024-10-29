@@ -13,25 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-plugins {
-    id("com.iamkurtgoz.android.library")
-    id("com.iamkurtgoz.android.sub.hilt")
-}
+package com.iamkurtgoz.local.entity
 
-android {
-    namespace = "com.iamkurtgoz.local"
-    hilt.enableAggregatingTask = true
-}
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-dependencies {
-    // Projects
-    implementation(projects.data)
-
-    // Network
-    implementation(libs.network.gson)
-
-    // Local
-    implementation(libs.room.runtime)
-    implementation(libs.room.ktx)
-    ksp(libs.room.compiler)
-}
+@Entity(tableName = "TableSatelliteDetailEntity")
+data class SatelliteDetailEntity(
+    @PrimaryKey
+    @ColumnInfo(name = "id")
+    val id: Int,
+    @ColumnInfo(name = "costPerLaunch")
+    val costPerLaunch: Int,
+    @ColumnInfo(name = "firstFlightDate")
+    val firstFlightDate: String,
+    @ColumnInfo(name = "height")
+    val height: Int,
+    @ColumnInfo(name = "mass")
+    val mass: Int,
+)
