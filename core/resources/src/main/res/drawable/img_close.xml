@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2024 Mehmet KURTGOZ
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="18dp"
+    android:height="18dp"
+    android:viewportWidth="18"
+    android:viewportHeight="18">
+  <path
+      android:pathData="M9,18C13.924,18 18,13.915 18,9C18,4.076 13.915,0 8.991,0C4.076,0 0,4.076 0,9C0,13.915 4.085,18 9,18ZM5.885,12.847C5.488,12.847 5.162,12.512 5.162,12.106C5.162,11.912 5.241,11.735 5.374,11.594L7.959,9.009L5.374,6.424C5.241,6.282 5.162,6.106 5.162,5.912C5.162,5.506 5.488,5.188 5.885,5.188C6.097,5.188 6.265,5.259 6.397,5.4L8.991,7.985L11.612,5.391C11.762,5.241 11.921,5.171 12.115,5.171C12.512,5.171 12.838,5.497 12.838,5.894C12.838,6.097 12.776,6.256 12.627,6.415L10.032,9.009L12.618,11.585C12.759,11.735 12.829,11.903 12.829,12.106C12.829,12.512 12.503,12.847 12.097,12.847C11.894,12.847 11.718,12.759 11.576,12.627L8.991,10.041L6.424,12.627C6.282,12.768 6.097,12.847 5.885,12.847Z"
+      android:fillColor="#3C3C43"
+      android:fillAlpha="0.6"/>
+</vector>

@@ -1,0 +1,23 @@
+[
+    {
+        "id": 1,
+        "cost_per_launch": 7200000,
+        "first_flight": "2021-12-01",
+        "height": 118,
+        "mass": 1167000
+    },
+    {
+        "id": 2,
+        "cost_per_launch": 8300000,
+        "first_flight": "2020-10-03",
+        "height": 110,
+        "mass": 1135000
+    },
+    {
+        "id": 3,
+        "cost_per_launch": 6000000,
+        "first_flight": "2019-09-14",
+        "height": 132,
+        "mass": 1435000
+    }
+]
